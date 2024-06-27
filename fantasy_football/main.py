@@ -15,3 +15,7 @@ templates = Jinja2Templates(directory="frontend/templates")
 @app.get("/")
 async def login(request:Request, loginError=""):
     return templates.TemplateResponse("login.html", context ={"request":request, "loginError":loginError})
+
+@app.get("/signUp")
+async def login(request:Request, signUpError=""):
+    return templates.TemplateResponse("signUp.html", context ={"request":request, "signUpError":signUpError})
