@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse,JSONResponse,RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import Annotated
-from backend import *
+from backend import funcs, queryRunner, testFuncs
 #app is set to FastAPI
 app = FastAPI()
 app.mount("/frontend/static", StaticFiles(directory="frontend/static"), name="static")
@@ -20,7 +20,7 @@ async def login(request:Request, loginError=""):
 #attempt to login
 @app.post("/")
 async def login(request:Request, username: Annotated[str, Form()], password: Annotated[str, Form()]):
-    result = await login(username, password)
+    result = await funcs.login(username, password)
     print(result)
 
 #sign up page
