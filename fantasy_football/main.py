@@ -20,7 +20,7 @@ async def login(request:Request, loginError=""):
 #attempt to login
 @app.post("/")
 async def login(request:Request, username: Annotated[str, Form()], password: Annotated[str, Form()]):
-    result = login(username, password)
+    result = await login(username, password)
     print(result)
 
 #sign up page
