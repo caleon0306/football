@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse,JSONResponse,RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from typing import Annotated
-from backend import *
+from backend.funcs import *
 #app is set to FastAPI
 app = FastAPI()
 app.mount("/frontend/static", StaticFiles(directory="frontend/static"), name="static")
@@ -20,10 +20,20 @@ async def loginPage(request:Request, loginError=""):
 #attempt to login
 @app.post("/")
 async def loginAttempt(request:Request, username: Annotated[str, Form()], password: Annotated[str, Form()]):
-    result =  await login(username, password)
-    print(result)
+    result = login(username, password)
+    #check result to see if credentials are correct
+    if type(result)== str:
+        return await loginPage(request, result)
+    response=RedirectResponse("dashboard", status_code=status.HTTP_303_SEE_OTHER)
+    response.set_cookie(key="user_id", value=result)
+    return response
 
 #sign up page
 @app.get("/signUp")
-async def login(request:Request, signUpError=""):
+async def signUpPage(request:Request, signUpError=""):
     return templates.TemplateResponse("signUp.html", context ={"request":request, "signUpError":signUpError})
+
+#main user homepage
+@app.get("/dashboard")
+async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = None):
+    return templates.TemplateResponse(name="dashboard.html", context={"username":userid, "request":request})

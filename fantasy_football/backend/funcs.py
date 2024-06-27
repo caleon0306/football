@@ -47,6 +47,7 @@ def login(username="", password=""):
     #check encoded given password with encoded stored password
     #True means match and return what is wanted
     if(bcrypt.checkpw(str(password).encode(), result[1].encode())):
+        print(result[0])
         return result[0]
 
 
