@@ -1,5 +1,5 @@
-import queryRunner as qr
 import bcrypt
+import backend.queryRunner as qr
 
 #create account credentials for a user
 def create_account(username = "", password = "", confirmPassword=""):
