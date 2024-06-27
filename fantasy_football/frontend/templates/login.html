@@ -13,11 +13,11 @@ use id and name as the same for now, should be fine-->
     <input type="text" id="username" name="username">
     <br>
     <label for="password">Password:</label>
-    <input type="text" id="password" name="password">
+    <input type="password" id="password" name="password">
     <br>
     <button type="submit" id="login_button">Login</button>
 </form>
-<p>{{loginErrorMessage}}</p>
+<p style = "color:red">{{loginError}}</p>
 
 <script>
     //on page load
