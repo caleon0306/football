@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+<p id = "testName">{{name}}</p>
+<!--method=post means the form will senda post req to the same dir
+make the button in the form type submit to send the form
+use id and name as the same for now, should be fine-->
+<form method = "post">
+    <!--label will create text for an id/name-->
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name">
+    <br>
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name">
+    <br>
+    <button type="submit" id="login_button">Login</button>
+</form>
+
+<script>
+    //on page load
+    /**
+      (async () => {
+        run all things here before loading the page
+        useful for functions to fill out variables
+      })();
+    */
+    async function sampleFunc(){
+        console.log("sampleFunc")
+        let input = document.getElementById("sampleInput").value
+        let response = await fetch(`/test/${input}`, {
+        method:"POST",
+        credentials:"include",
+        mode:"cors",
+        headers:{"Content-Type": "application/json"}
+        })
+        response = await response.json()
+        document.getElementById("testName").innerHTML = response
+    }
+
+</script>
+
+</body>
+</html>
