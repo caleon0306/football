@@ -33,10 +33,15 @@ async def loginAttempt(request:Request, username: Annotated[str, Form()] = "", p
 async def signUpPage(request:Request, signUpError=""):
     return templates.TemplateResponse("signUp.html", context ={"request":request, "signUpError":signUpError})
 
+#attempt to sign up an account
 @app.post("/signUp")
 async def signUpAttempt(request:Request, username: Annotated[str, Form()] = "", password: Annotated[str, Form()] = "", passwordConfirm: Annotated[str, Form()] = ""):
     result = create_account(username, password, passwordConfirm)
-    
+    if type(result) == str:
+        return await signUpPage(request, result, username)
+    response = RedirectResponse("dashboard", status_code=status.HTTP_303_SEE_OTHER)
+    response.set_cookie(key="user_id", value = result)
+    return response
 
 #main user homepage
 @app.get("/dashboard")
