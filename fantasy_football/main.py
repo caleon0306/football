@@ -30,8 +30,8 @@ async def loginAttempt(request:Request, username: Annotated[str, Form()] = "", p
 
 #sign up page
 @app.get("/signUp")
-async def signUpPage(request:Request, signUpError=""):
-    return templates.TemplateResponse("signUp.html", context ={"request":request, "signUpError":signUpError})
+async def signUpPage(request:Request, signUpError="", username = ""):
+    return templates.TemplateResponse("signUp.html", context ={"request":request, "signUpError":signUpError, "username":username})
 
 #attempt to sign up an account
 @app.post("/signUp")
