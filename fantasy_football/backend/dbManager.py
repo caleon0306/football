@@ -8,7 +8,7 @@ def create_user_info_table():
         username VARCHAR(30) UNIQUE,
         password VARCHAR(60) NOT NULL
         );"""
-    qr.run_commit_query(query)
+    qr.run_commit(query)
 
 def create_league_info_table():
     #create table design
@@ -16,7 +16,7 @@ def create_league_info_table():
         league_id SERIAL PRIMARY KEY,
         owner_id INT NOT NULL,
         league_name VARCHAR(30) NOT NULL,
-        max_size INT NOT NULL,
+        size INT NOT NULL,
         team_price INT NOT NULL,
         total_pot INT,
         assigned_pot INT,
@@ -31,7 +31,7 @@ def create_league_info_table():
         extra_payout INT,
         FOREIGN KEY (owner_id) REFERENCES user_info(user_id)
     );"""
-    qr.run_commit_query(query)
+    qr.run_commit(query)
 
 def create_leage_players_table():
     query = """CREATE TABLE IF NOT EXISTS league_players(
@@ -44,11 +44,11 @@ def create_leage_players_table():
         highest_points_season BOOLEAN,
         highest_scoring_week BOOLEAN,
         number_highest_weekly_points INT,
-        extra_payout DEC(9,2),
+        extra_won INT,
         FOREIGN KEY (user_id) REFERENCES user_info(user_id),
         FOREIGN KEY (league_id) REFERENCES league_info(league_id)
     );"""
-    qr.run_commit_query(query)
+    qr.run_commit(query)
 
 #drop a table based on table name passed
 def drop_table(table = ""):
@@ -56,7 +56,7 @@ def drop_table(table = ""):
     if table == "":
         return
     query = f"""DROP TABLE IF EXISTS {table};"""
-    qr.run_commit_query(query)
+    qr.run_commit(query)
 
 #drop all tables then add them back
 def reset_all_tables():
@@ -75,5 +75,5 @@ def get_rows_table(table = ""):
     FROM {table};"""
     return qr.fetch_all(query)
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
     reset_all_tables()

@@ -1,7 +1,7 @@
 import psycopg2 as psy
 
 #function to run a query to commit to fantasy_football database
-def run_commit_query(query = ""):
+def run_commit(query = ""):
     if query == "":
         return
     connection = psy.connect(database="fantasy_football", user="postgres",password="4Wihicis!")
