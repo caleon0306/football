@@ -5,8 +5,8 @@ def create_user_info_table():
     #create table design
     query = """CREATE TABLE IF NOT EXISTS user_info(
         user_id SERIAL PRIMARY KEY,
-        username VARCHAR(70) UNIQUE,
-        password VARCHAR(70) NOT NULL
+        username VARCHAR(30) UNIQUE,
+        password VARCHAR(30) NOT NULL
         );"""
     qr.run_commit_query(query)
 
@@ -15,20 +15,20 @@ def create_league_info_table():
     query = """CREATE TABLE IF NOT EXISTS league_info(
         league_id SERIAL PRIMARY KEY,
         owner_id INT NOT NULL,
-        league_name VARCHAR(70) NOT NULL,
+        league_name VARCHAR(30) NOT NULL,
         max_size INT NOT NULL,
-        team_price DEC(7,2) NOT NULL,
-        total_pot DEC(9,2),
-        pot_remaining DEC(9,2),
-        pot_paidout DEC(9,2),
-        first_payout DEC(9,2),
-        second_payout DEC(9,2),
-        third_payout DEC(9,2),
-        highest_points_season_payout DEC(9,2),
-        highest_scoring_week_payout DEC(9,2),
-        highest_points_weekly_payout DEC(9,2),
+        team_price INT NOT NULL,
+        total_pot INT,
+        assigned_pot INT,
+        unassigned_pot INT,
+        first_payout INT,
+        second_payout INT,
+        third_payout INT,
+        highest_points_season_payout INT,
+        highest_scoring_week_payout INT,
+        highest_points_weekly_payout INT,
         number_weekly_payouts INT,
-        extra_payout DEC(9,2),
+        extra_payout INT,
         FOREIGN KEY (owner_id) REFERENCES user_info(user_id)
     );"""
     qr.run_commit_query(query)
@@ -76,4 +76,4 @@ def get_rows_table(table = ""):
     return qr.fetch_all(query)
 
 #if __name__ == "__main__":
-    print(get_rows_table("user_info"))
+    reset_all_tables()

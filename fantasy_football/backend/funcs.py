@@ -46,6 +46,13 @@ def login(username="", password=""):
         print(result[0])
         return result[0]
 
+#create a league for league_info
+def create_league(user_id, name, size, price,firstPlace=0, secondPlace=0, thirdPlace=0,
+                  highestPointsSeason=0, highestScoringWeek=0,highestScoreWeekly=0,numWeeklyPayouts=0):
+    totalPot = size * price
+    potRemaining = totalPot - firstPlace - secondPlace - thirdPlace -highestPointsSeason - highestScoreWeekly
+    query = f"""INSERT INTO league_info
+    ("owner_id");"""
 
 #check requierments for username
 #String returned if not valid
@@ -53,7 +60,7 @@ def login(username="", password=""):
 def username_requierments(username = ""):
     if username == "":
         return "Username required."
-    if len(username) >69:
+    if len(username) > 29:
         return "Username is too long."
     
     #run a query to get all accounts with same username
@@ -72,7 +79,7 @@ def username_requierments(username = ""):
 def password_requierments(password = "", confirmPassword = ""):
     if password == "":
         return "Password required."
-    if len(password) > 69:
+    if len(password) > 29:
         return "Password is too long."
     if password != confirmPassword:
         return "Passwords do not match."
