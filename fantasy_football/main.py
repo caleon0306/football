@@ -48,7 +48,10 @@ async def signUpAttempt(request:Request, username: Annotated[str, Form()] = "", 
 async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = None):
     return templates.TemplateResponse(name="dashboard.html", context={"username":userid, "request":request})
 
-@app.get("/cre")
+#page to create a new league
+@app.get("/createLeague")
+async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = None, createLeagueError = ""):
+    return templates.TemplateResponse("createLeague.html", context={"username":userid, "request":request, "createLeagueError":createLeagueError})
 
 #practice using cookie to get information
 @app.post("/username")
