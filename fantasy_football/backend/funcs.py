@@ -19,10 +19,17 @@ def create_account(username = "", password = "", confirmPassword=""):
 
     #check to see if account exists
     if result == None:
+        #create a new account with user info
         query = f"""INSERT INTO user_info
         (username, password)
         VALUES('{username}', '{storedPass(password)}');"""
         qr.run_commit_query(query)
+
+        #fetch the id of the acout created
+        query = f"""SELECT user_id
+        FROM user_info
+        WHERE username = '{username}'"""
+        return qr.fetch_one(query)[0]
     else:
         return "Username already in use."
 

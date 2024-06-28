@@ -67,6 +67,7 @@ def reset_all_tables():
     create_league_info_table()
     create_leage_players_table()
 
+#get the rows for a table
 def get_rows_table(table = ""):
     if table == "":
         return
@@ -75,3 +76,4 @@ def get_rows_table(table = ""):
     return qr.fetch_all(query)
 
 #if __name__ == "__main__":
+    print(get_rows_table("user_info"))

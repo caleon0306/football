@@ -33,6 +33,11 @@ async def loginAttempt(request:Request, username: Annotated[str, Form()] = "", p
 async def signUpPage(request:Request, signUpError=""):
     return templates.TemplateResponse("signUp.html", context ={"request":request, "signUpError":signUpError})
 
+@app.post("/signUp")
+async def signUpAttempt(request:Request, username: Annotated[str, Form()] = "", password: Annotated[str, Form()] = "", passwordConfirm: Annotated[str, Form()] = ""):
+    result = create_account(username, password, passwordConfirm)
+    
+
 #main user homepage
 @app.get("/dashboard")
 async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = None):

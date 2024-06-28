@@ -4,19 +4,19 @@
 
 <a href = "/">Login</a>
 <h1>Sign Up</h1>
-
 <form method="post">
     <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
+    <input type="text" id="username" name="username" value={{username}}>
     <br>
     <label for="password">Password:</label>
-    <input type="text" id="password" name="password">
+    <input type="password" id="password" name="password">
     <br>
     <label for="passwordConfirm">Confirm Password:</label>
-    <input type="text" id="passwordConfirm" name="passwordConfirm">
+    <input type="password" id="passwordConfirm" name="passwordConfirm">
     <br>
-    <button type="submit" id="login_button">Sign Up</button>
+    <button type="submit" id="login_button">Login</button>
 </form>
+<p style="color:red;">{{signUpError}}</p>
 
 </body>
 </html>
