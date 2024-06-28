@@ -48,6 +48,8 @@ async def signUpAttempt(request:Request, username: Annotated[str, Form()] = "", 
 async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = None):
     return templates.TemplateResponse(name="dashboard.html", context={"username":userid, "request":request})
 
+@app.get("/cre")
+
 #practice using cookie to get information
 @app.post("/username")
 async def username(request:Request, userid: Annotated[str | None, Cookie()] = None):
