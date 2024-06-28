@@ -10,28 +10,17 @@ def create_account(username = "", password = "", confirmPassword=""):
     password_result = password_requierments(password, confirmPassword)
     if type(password_result) == str:
         return password_result
-    
-    #run a query to get all accounts with same username
-    query = f"""SELECT *
+    #create a new account with user info
+    query = f"""INSERT INTO user_info
+    (username, password)
+    VALUES('{username}', '{storedPass(password)}');"""
+    qr.run_commit_query(query)
+
+    #fetch the id of the acout created
+    query = f"""SELECT user_id
     FROM user_info
-    WHERE username = '{username}';"""
-    result = qr.fetch_one(query)
-
-    #check to see if account exists
-    if result == None:
-        #create a new account with user info
-        query = f"""INSERT INTO user_info
-        (username, password)
-        VALUES('{username}', '{storedPass(password)}');"""
-        qr.run_commit_query(query)
-
-        #fetch the id of the acout created
-        query = f"""SELECT user_id
-        FROM user_info
-        WHERE username = '{username}'"""
-        return qr.fetch_one(query)[0]
-    else:
-        return "Username already in use."
+    WHERE username = '{username}'"""
+    return qr.fetch_one(query)[0]
 
 #login function to attempt to login to credentials
 def login(username="", password=""):
@@ -66,7 +55,16 @@ def username_requierments(username = ""):
         return "Username required."
     if len(username) >69:
         return "Username is too long."
-    return True
+    
+    #run a query to get all accounts with same username
+    query = f"""SELECT *
+    FROM user_info
+    WHERE username = '{username}';"""
+    result = qr.fetch_one(query)
+    #check if account exists with username
+    if result == None:
+        return True
+    return "Username already in use."
 
 #check requierments for password
 #String returned if not vaild
