@@ -54,6 +54,8 @@ def create_league(user_id, name="", size=2, price=0,firstPlace=0, secondPlace=0,
     if type(nameCheck) == str:
         return nameCheck
     #check to ensure league size meets requierments
+    print("SIZE:",size)
+    print("TYPE:", type(size))
     sizeCheck = league_size_requierments(size)
     if type(sizeCheck) == str:
         return sizeCheck
@@ -75,7 +77,7 @@ def create_league(user_id, name="", size=2, price=0,firstPlace=0, secondPlace=0,
     WHERE "owner_id" = '{user_id}';"""
     result = qr.fetch_one(query)[0]
     update_pots(result)
-    return True
+    return result
 
 #recalculate the money for the league
 def update_pots(league_id):

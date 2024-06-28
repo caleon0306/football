@@ -50,8 +50,21 @@ async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = N
 
 #page to create a new league
 @app.get("/createLeague")
-async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = None, createLeagueError = ""):
+async def createLeaguePage(request:Request, userid: Annotated[str | None, Cookie()] = None, createLeagueError = ""):
     return templates.TemplateResponse("createLeague.html", context={"username":userid, "request":request, "createLeagueError":createLeagueError})
+
+@app.post("/createLeague")
+async def createLEagueAttempt(request:Request, userid: Annotated[str | None, Cookie()], leagueName: Annotated[str, Form()] = "", size: Annotated[str, Form()] = "", price: Annotated[str, Form()] = "",firstPayout: Annotated[str, Form()] = "",secondPayout: Annotated[str, Form()] = "",thirdPayout: Annotated[str, Form()] = "",highestPointsSeason: Annotated[str, Form()] = "",highestSingleWeek: Annotated[str, Form()] = "",highestPointsPerWeek: Annotated[str, Form()] = "",numWeeklyPayouts: Annotated[str, Form()] = ""):
+    result = create_league(userid,leagueName,size,price,firstPayout,secondPayout,thirdPayout,highestPointsSeason,highestSingleWeek,highestPointsPerWeek,numWeeklyPayouts)
+    if (type(result)) == str:
+        return await createLeaguePage(request, result)
+    response = RedirectResponse("leagueHome.html", status_code=status.HTTP_303_SEE_OTHER)
+    response.set_cookie(key="leagueid",value = result)
+    return response
+
+@app.get("/leagueHome")
+async def leaguePage(request:Request,userid: Annotated[str | None, Cookie()] = None,league: Annotated[str | None, Cookie()] = None):
+    return templates.TemplateResponse("leagueHome.html", context={"userid":userid, "leagueid":leagueid, "request":request})
 
 #practice using cookie to get information
 @app.post("/username")
