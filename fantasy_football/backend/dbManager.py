@@ -6,7 +6,7 @@ def create_user_info_table():
     query = """CREATE TABLE IF NOT EXISTS user_info(
         user_id SERIAL PRIMARY KEY,
         username VARCHAR(30) UNIQUE,
-        password VARCHAR(30) NOT NULL
+        password VARCHAR(60) NOT NULL
         );"""
     qr.run_commit_query(query)
 
