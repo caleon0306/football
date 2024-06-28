@@ -25,7 +25,7 @@ async def loginAttempt(request:Request, username: Annotated[str, Form()] = "", p
     if type(result)== str:
         return await loginPage(request, result, username)
     response=RedirectResponse("dashboard", status_code=status.HTTP_303_SEE_OTHER)
-    response.set_cookie(key="user_id", value=result)
+    response.set_cookie(key="userid", value=result)
     return response
 
 #sign up page
@@ -40,10 +40,16 @@ async def signUpAttempt(request:Request, username: Annotated[str, Form()] = "", 
     if type(result) == str:
         return await signUpPage(request, result, username)
     response = RedirectResponse("dashboard", status_code=status.HTTP_303_SEE_OTHER)
-    response.set_cookie(key="user_id", value = result)
+    response.set_cookie(key="userid", value = result)
     return response
 
 #main user homepage
 @app.get("/dashboard")
 async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = None):
     return templates.TemplateResponse(name="dashboard.html", context={"username":userid, "request":request})
+
+#practice using cookie to get information
+@app.post("/username")
+async def username(request:Request, userid: Annotated[str | None, Cookie()] = None):
+    result = get_username(userid)
+    return JSONResponse(content= result)

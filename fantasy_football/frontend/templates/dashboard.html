@@ -6,5 +6,25 @@
     Dashboard
 </h1>
 
+<p id="test">No result</p>
+
+<script>
+    //on page load
+  (async () => {
+    await getUsername();
+  })();
+
+  async function getUsername(){
+    let response = await fetch("/username", {
+    method:"POST",
+    credentials:"include",
+    mode:"cors",
+    headers:{"Content-Type": "application/json"}
+  })
+  response = await response.json()
+  document.getElementById("test").innerHTML = response
+  }
+</script>
+
 </body>
 </html>

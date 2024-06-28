@@ -126,4 +126,10 @@ def password_requierments(password = "", confirmPassword = ""):
 def storedPass(password):
     hashedPass = bcrypt.hashpw(str(password).encode(), bcrypt.gensalt())
     return hashedPass.decode()
-        
+
+#return username based on user id      
+def get_username(user_id):
+    query = f"""SELECT username
+    FROM user_info
+    WHERE "user_id" = '{user_id}';"""
+    return qr.fetch_one(query)[0]
