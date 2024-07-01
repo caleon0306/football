@@ -61,13 +61,13 @@ async def createLEagueAttempt(request:Request, user_id: Annotated[str | None, Co
     if (type(result)) == str:
         return await createLeaguePage(request, result)
     response = RedirectResponse("leagueHome", status_code=status.HTTP_303_SEE_OTHER)
-    response.set_cookie(key="leagueid",value = result)
+    response.set_cookie(key="league_id",value = result)
     return response
 
 #league home page
 @app.get("/leagueHome")
-async def leaguePage(request:Request,user_id: Annotated[str | None, Cookie()] = None,leagueid: Annotated[str | None, Cookie()] = None):
-    return templates.TemplateResponse("leagueHome.html", context={"user_id":user_id, "leagueid":leagueid, "request":request})
+async def leaguePage(request:Request,user_id: Annotated[str | None, Cookie()] = None,league_id: Annotated[str | None, Cookie()] = None):
+    return templates.TemplateResponse("leagueHome.html", context={"user_id":user_id, "league_id":league_id, "request":request})
 
 #practice using cookie to get information
 @app.post("/username")
