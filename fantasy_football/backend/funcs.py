@@ -20,7 +20,7 @@ def create_account(username = "", password = "", confirmPassword=""):
     query = f"""SELECT user_id
     FROM user_info
     WHERE username = '{username}'"""
-    return qr.fetch_one(query)
+    return qr.fetch_one(query)[0]
 
 #login function to attempt to login to credentials
 def login(username="", password=""):
@@ -74,13 +74,21 @@ def create_league(user_id, name="", size=0, price=0,firstPlace=0, secondPlace=0,
     query = f"""SELECT MAX(league_id)
     FROM league_info
     WHERE "owner_id" = '{user_id}';"""
-    result = qr.fetch_one(query)
+    result = qr.fetch_one(query)[0]
     update_pots(result)
     return result
 
 #get the league name given the league id
 def get_league_name(league_id):
     query = f"""SELECT league_name
+    FROM league_info
+    WHERE "league_id" = '{league_id}';"""
+    result = qr.fetch_one(query)[0]
+    return result
+
+#get all league info given league id
+def get_league_info(league_id):
+    query = f"""SELECT *
     FROM league_info
     WHERE "league_id" = '{league_id}';"""
     result = qr.fetch_one(query)
@@ -185,4 +193,4 @@ def get_username(user_id):
     query = f"""SELECT username
     FROM user_info
     WHERE "user_id" = '{user_id}';"""
-    return qr.fetch_one(query)
+    return qr.fetch_one(query)[0]

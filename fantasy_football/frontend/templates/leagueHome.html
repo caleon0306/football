@@ -5,7 +5,7 @@
 <h1>
     League Home Page
 </h1>
-<p id="league_id">No league id</p>
+<p id="league_info">No league info</p>
 
 <script>
       //on page load
@@ -13,14 +13,14 @@
     await getLeagueId();
   })();
   async function getLeagueId() {
-    let response = await fetch("/leagueID", {
+    let response = await fetch("/leagueInfo", {
         method:"POST",
         credentials:"include",
         mode:"cors",
         headers:{"Content-Type": "application/json"}
     })
     response = await response.json()
-    document.getElementById("league_id").innerHTML = response
+    document.getElementById("league_info").innerHTML = response
   }
 </script>
 </body>

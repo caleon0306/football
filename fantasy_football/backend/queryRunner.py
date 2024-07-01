@@ -26,7 +26,7 @@ def fetch_one(query = ""):
     result = cursor.fetchone()
     cursor.close()
     connection.close()
-    return result[0]
+    return result
 
 #fetch all rows for a query
 def fetch_all(query = ""):
