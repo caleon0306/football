@@ -10,34 +10,34 @@ UPDATE FORM TO GET INT INPUT
 -->
 <form method = "post">
     <label for = "leagueName">League Name</label>
-    <input type = "text" id="leagueName" name = "leagueName", value="{{values[leagueName]}}">
+    <input type = "text" id="leagueName" name = "leagueName", value="{{values['leagueName']}}">
     <br>
     <label for = "size">League Size</label>
-    <input type = "int" id="size" name = "size">
+    <input type = "int" id="size" name = "size" value="{{values['size']}}">
     <br>
     <label for = "price">Team Price</label>
-    <input type = "int" id="price" name = "price">
+    <input type = "int" id="price" name = "price" value="{{values['price']}}">
     <br>
     <label for = "firstPayout">First Place Payout</label>
-    <input type = "int" id="firstPayout" name = "firstPayout">
+    <input type = "int" id="firstPayout" name = "firstPayout" value="{{values['firstPayout']}}">
     <br>
     <label for = "secondPayout">Second Place Payout</label>
-    <input type = "int" id="secondPayout" name = "secondPayout">
+    <input type = "int" id="secondPayout" name = "secondPayout" value="{{values['secondPayout']}}">
     <br>
     <label for = "thirdPayout">Third Place Payout</label>
-    <input type = "int" id="thirdPayout" name = "thirdPayout">
+    <input type = "int" id="thirdPayout" name = "thirdPayout" value="{{values['thirdPayout']}}">
     <br>
     <label for = "highestPointsSeason">Most Points throughout Season Payout:</label>
-    <input type = "int" id="highestPointsSeason" name = "highestPointsSeason">
+    <input type = "int" id="highestPointsSeason" name = "highestPointsSeason" value="{{values['highestPointsSeason']}}">
     <br>
     <label for = "highestSingleWeek">Most Points in a Single Week Payout</label>
-    <input type = "int" id="highestSingleWeek" name = "highestSingleWeek">
+    <input type = "int" id="highestSingleWeek" name = "highestSingleWeek" value="{{values['highestSingleWeek']}}">
     <br>
     <label for = "highestPointsPerWeek">Most Points Scored per Week Payout</label>
-    <input type = "int" id="highestPointsPerWeek" name = "highestPointsPerWeek">
+    <input type = "int" id="highestPointsPerWeek" name = "highestPointsPerWeek" value="{{values['highestPointsPerWeek']}}">
     <br>
     <label for = "numWeeklyPayouts">Number of Weekly Payouts</label>
-    <input type = "int" id="numWeeklyPayouts" name = "numWeeklyPayouts">
+    <input type = "int" id="numWeeklyPayouts" name = "numWeeklyPayouts" value="{{values['numWeeklyPayouts']}}">
     <br>
     <button type="submit" id = "create_league_button">Create League</button>
 </form>
