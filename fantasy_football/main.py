@@ -53,6 +53,7 @@ async def dashboard(request:Request, userid: Annotated[str | None, Cookie()] = N
 async def createLeaguePage(request:Request, userid: Annotated[str | None, Cookie()] = None, createLeagueError = ""):
     return templates.TemplateResponse("createLeague.html", context={"username":userid, "request":request, "createLeagueError":createLeagueError})
 
+#attempt to create a new league
 @app.post("/createLeague")
 async def createLEagueAttempt(request:Request, userid: Annotated[str | None, Cookie()], leagueName: Annotated[str, Form()] = "", size: Annotated[int, Form()] = "", price: Annotated[int, Form()] = "",firstPayout: Annotated[int, Form()] = "",secondPayout: Annotated[int, Form()] = "",thirdPayout: Annotated[int, Form()] = "",highestPointsSeason: Annotated[int, Form()] = "",highestSingleWeek: Annotated[int, Form()] = "",highestPointsPerWeek: Annotated[int, Form()] = "",numWeeklyPayouts: Annotated[int, Form()] = ""):
     print("TYPE SIZE:",type(highestPointsPerWeek))
@@ -63,6 +64,7 @@ async def createLEagueAttempt(request:Request, userid: Annotated[str | None, Coo
     response.set_cookie(key="leagueid",value = result)
     return response
 
+#league home page
 @app.get("/leagueHome")
 async def leaguePage(request:Request,userid: Annotated[str | None, Cookie()] = None,league: Annotated[str | None, Cookie()] = None):
     return templates.TemplateResponse("leagueHome.html", context={"userid":userid, "leagueid":leagueid, "request":request})
