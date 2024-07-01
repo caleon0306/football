@@ -6,5 +6,22 @@
     League Home Page
 </h1>
 <p id="league_id">No league id</p>
+
+<script>
+      //on page load
+  (async () => {
+    await getLeagueId();
+  })();
+  async function getLeagueId() {
+    let response = await fetch("/leagueID", {
+        method:"POST",
+        credentials:"include",
+        mode:"cors",
+        headers:{"Content-Type": "application/json"}
+    })
+    response = await response.json()
+    document.getElementById("league_id").innerHTML = response
+  }
+</script>
 </body>
 </html>

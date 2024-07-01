@@ -70,6 +70,12 @@ async def createLeagueAttempt(request:Request, user_id: Annotated[str | None, Co
 async def leaguePage(request:Request,user_id: Annotated[str | None, Cookie()] = None,league_id: Annotated[str | None, Cookie()] = None):
     return templates.TemplateResponse("leagueHome.html", context={"user_id":user_id, "league_id":league_id, "request":request})
 
+#returns a league id
+@app.post("/leagueID")
+async def leaguePage(resquest:Request, user_id:Annotated[str | None, Cookie()] = None, league_id:Annotated[str | None, Cookie()] = None):
+    result = get_league_name(league_id)
+    return JSONResponse(content = result)
+
 #practice using cookie to get information
 @app.post("/username")
 async def username(request:Request, user_id: Annotated[str | None, Cookie()] = None):
