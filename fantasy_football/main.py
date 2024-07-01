@@ -66,7 +66,7 @@ async def createLEagueAttempt(request:Request, userid: Annotated[str | None, Coo
 
 #league home page
 @app.get("/leagueHome")
-async def leaguePage(request:Request,userid: Annotated[str | None, Cookie()] = None,league: Annotated[str | None, Cookie()] = None):
+async def leaguePage(request:Request,userid: Annotated[str | None, Cookie()] = None,leagueid: Annotated[str | None, Cookie()] = None):
     return templates.TemplateResponse("leagueHome.html", context={"userid":userid, "leagueid":leagueid, "request":request})
 
 #practice using cookie to get information
