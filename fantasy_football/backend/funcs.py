@@ -48,15 +48,13 @@ def login(username="", password=""):
         return "Invalid username/password."
 
 #create a league for league_info
-def create_league(user_id, name="", size=2, price=0,firstPlace=0, secondPlace=0, thirdPlace=0,
+def create_league(user_id, name="", size=0, price=0,firstPlace=0, secondPlace=0, thirdPlace=0,
                   highestPointsSeason=0, highestScoringWeek=0,highestScoreWeekly=0,numWeeklyPayouts=0):
     #check to ensure name meets requierments
     nameCheck = league_name_requierments(name)
     if type(nameCheck) == str:
         return nameCheck
     #check to ensure league size meets requierments
-    print("SIZE:",size)
-    print("TYPE:", type(size))
     sizeCheck = league_size_requierments(size)
     if type(sizeCheck) == str:
         return sizeCheck
