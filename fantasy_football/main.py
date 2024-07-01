@@ -50,16 +50,17 @@ async def dashboard(request:Request, user_id: Annotated[str | None, Cookie()] = 
 
 #page to create a new league
 @app.get("/createLeague")
-async def createLeaguePage(request:Request, user_id: Annotated[str | None, Cookie()] = None, createLeagueError = ""):
-    return templates.TemplateResponse("createLeague.html", context={"username":user_id, "request":request, "createLeagueError":createLeagueError})
+async def createLeaguePage(request:Request, user_id: Annotated[str | None, Cookie()] = None, createLeagueError = "", values = {}):
+    return templates.TemplateResponse("createLeague.html", context={"username":user_id, "request":request, "createLeagueError":createLeagueError, "values":values})
 
 #attempt to create a new league
 @app.post("/createLeague")
 async def createLeagueAttempt(request:Request, user_id: Annotated[str | None, Cookie()], leagueName: Annotated[str, Form()] = "", size: Annotated[int, Form()] = 0, price: Annotated[int, Form()] = 0,firstPayout: Annotated[int, Form()] = 0,secondPayout: Annotated[int, Form()] = 0,thirdPayout: Annotated[int, Form()] = 0,highestPointsSeason: Annotated[int, Form()] = 0,highestSingleWeek: Annotated[int, Form()] = 0,highestPointsPerWeek: Annotated[int, Form()] = 0,numWeeklyPayouts: Annotated[int, Form()] = 0):
-    print("In func")
     result = create_league(user_id,leagueName,size,price,firstPayout,secondPayout,thirdPayout,highestPointsSeason,highestSingleWeek,highestPointsPerWeek,numWeeklyPayouts)
     if (type(result)) == str:
-        return await createLeaguePage(request, user_id, result)
+        values = {"leagueName": leagueName, "size": size, "price": price, "firstPayout": firstPayout, "secondPayout": secondPayout, "thirdPayout": thirdPayout,
+                  "highestPointsSeason":highestPointsSeason,"highestSingleWeek":highestSingleWeek,"highestPointsPerWeek":highestPointsPerWeek,"numWeeklyPayouts":numWeeklyPayouts}
+        return await createLeaguePage(request, user_id, result, values)
     response = RedirectResponse("leagueHome", status_code=status.HTTP_303_SEE_OTHER)
     response.set_cookie(key="league_id",value = result)
     return response
