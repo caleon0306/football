@@ -43,8 +43,9 @@ def login(username="", password=""):
     #check encoded given password with encoded stored password
     #True means match and return what is wanted
     if(bcrypt.checkpw(str(password).encode(), result[1].encode())):
-        print(result[0])
         return result[0]
+    else:
+        return "Invalid username/password."
 
 #create a league for league_info
 def create_league(user_id, name="", size=2, price=0,firstPlace=0, secondPlace=0, thirdPlace=0,
@@ -156,11 +157,15 @@ def league_size_requierments(size):
 #requierments for team prices
 #ensure no negative or non-integer
 def league_price_requierments(*prices):
+    print("IN LEAGUE PRICE")
+    count = 0
     for price in prices:
+        print(count, " " , price)
         if price < 0:
             return "Prices cannot be less than 0."
         if type(price) != int:
             return "Prices must be a whole number."
+        count = count + 1
     return True
 
 #hash the given password and return its decoded result

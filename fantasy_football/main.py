@@ -54,7 +54,8 @@ async def createLeaguePage(request:Request, userid: Annotated[str | None, Cookie
     return templates.TemplateResponse("createLeague.html", context={"username":userid, "request":request, "createLeagueError":createLeagueError})
 
 @app.post("/createLeague")
-async def createLEagueAttempt(request:Request, userid: Annotated[str | None, Cookie()], leagueName: Annotated[str, Form()] = "", size: Annotated[str, Form()] = "", price: Annotated[str, Form()] = "",firstPayout: Annotated[str, Form()] = "",secondPayout: Annotated[str, Form()] = "",thirdPayout: Annotated[str, Form()] = "",highestPointsSeason: Annotated[str, Form()] = "",highestSingleWeek: Annotated[str, Form()] = "",highestPointsPerWeek: Annotated[str, Form()] = "",numWeeklyPayouts: Annotated[str, Form()] = ""):
+async def createLEagueAttempt(request:Request, userid: Annotated[str | None, Cookie()], leagueName: Annotated[str, Form()] = "", size: Annotated[int, Form()] = "", price: Annotated[int, Form()] = "",firstPayout: Annotated[int, Form()] = "",secondPayout: Annotated[int, Form()] = "",thirdPayout: Annotated[int, Form()] = "",highestPointsSeason: Annotated[int, Form()] = "",highestSingleWeek: Annotated[int, Form()] = "",highestPointsPerWeek: Annotated[int, Form()] = "",numWeeklyPayouts: Annotated[int, Form()] = ""):
+    print("TYPE SIZE:",type(highestPointsPerWeek))
     result = create_league(userid,leagueName,size,price,firstPayout,secondPayout,thirdPayout,highestPointsSeason,highestSingleWeek,highestPointsPerWeek,numWeeklyPayouts)
     if (type(result)) == str:
         return await createLeaguePage(request, result)
