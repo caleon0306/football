@@ -60,7 +60,7 @@ async def createLEagueAttempt(request:Request, userid: Annotated[str | None, Coo
     result = create_league(userid,leagueName,size,price,firstPayout,secondPayout,thirdPayout,highestPointsSeason,highestSingleWeek,highestPointsPerWeek,numWeeklyPayouts)
     if (type(result)) == str:
         return await createLeaguePage(request, result)
-    response = RedirectResponse("leagueHome.html", status_code=status.HTTP_303_SEE_OTHER)
+    response = RedirectResponse("leagueHome", status_code=status.HTTP_303_SEE_OTHER)
     response.set_cookie(key="leagueid",value = result)
     return response
 
