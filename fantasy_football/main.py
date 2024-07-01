@@ -55,11 +55,11 @@ async def createLeaguePage(request:Request, user_id: Annotated[str | None, Cooki
 
 #attempt to create a new league
 @app.post("/createLeague")
-async def createLEagueAttempt(request:Request, user_id: Annotated[str | None, Cookie()], leagueName: Annotated[str, Form()] = "", size: Annotated[int, Form()] = 0, price: Annotated[int, Form()] = 0,firstPayout: Annotated[int, Form()] = 0,secondPayout: Annotated[int, Form()] = 0,thirdPayout: Annotated[int, Form()] = 0,highestPointsSeason: Annotated[int, Form()] = 0,highestSingleWeek: Annotated[int, Form()] = 0,highestPointsPerWeek: Annotated[int, Form()] = 0,numWeeklyPayouts: Annotated[int, Form()] = 0):
+async def createLeagueAttempt(request:Request, user_id: Annotated[str | None, Cookie()], leagueName: Annotated[str, Form()] = "", size: Annotated[int, Form()] = 0, price: Annotated[int, Form()] = 0,firstPayout: Annotated[int, Form()] = 0,secondPayout: Annotated[int, Form()] = 0,thirdPayout: Annotated[int, Form()] = 0,highestPointsSeason: Annotated[int, Form()] = 0,highestSingleWeek: Annotated[int, Form()] = 0,highestPointsPerWeek: Annotated[int, Form()] = 0,numWeeklyPayouts: Annotated[int, Form()] = 0):
     print("In func")
     result = create_league(user_id,leagueName,size,price,firstPayout,secondPayout,thirdPayout,highestPointsSeason,highestSingleWeek,highestPointsPerWeek,numWeeklyPayouts)
     if (type(result)) == str:
-        return await createLeaguePage(request, result)
+        return await createLeaguePage(request, user_id, result)
     response = RedirectResponse("leagueHome", status_code=status.HTTP_303_SEE_OTHER)
     response.set_cookie(key="league_id",value = result)
     return response
