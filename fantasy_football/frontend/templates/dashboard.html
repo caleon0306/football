@@ -7,28 +7,16 @@
     Dashboard
 </h1>
 
-<p id="test">No result</p>
 <p>Leagues:</p>
 <p id = "leagues"></p>
 
 <script>
     //on page load
   (async () => {
-    await getUsername();
     await getLeagues();
   })();
 
-  async function getUsername(){
-    let response = await fetch("/username", {
-    method:"POST",
-    credentials:"include",
-    mode:"cors",
-    headers:{"Content-Type": "application/json"}
-  })
-  response = await response.json()
-  document.getElementById("test").innerHTML = response
-  }
-
+  //get league id and name a user is in
   async function getLeagues(){
     let response = await fetch("/userLeagues", {
       method:"POST",
@@ -37,10 +25,15 @@
     headers:{"Content-Type": "application/json"}
     })
     response = await response.json()
-    for (let i = 0; i < response.length; i++){
-      document.getElementById("leagues").innerHTML += response[i]
+    //check response to see if there are any leagues
+    if (response == null){
+      document.getElementById("leagues").innerHTML = "You're not in any leagues."
     }
-    
+    else {
+      for (let i = 0; i < response.length; i++){
+      document.getElementById("leagues").innerHTML += response[i] + "<br/>"
+    }
+    }
   }
 </script>
 
