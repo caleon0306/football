@@ -61,24 +61,27 @@ async def createLeagueAttempt(request:Request, user_id: Annotated[str | None, Co
         values = {"leagueName": leagueName, "size": size, "price": price, "firstPayout": firstPayout, "secondPayout": secondPayout, "thirdPayout": thirdPayout,
                   "highestPointsSeason":highestPointsSeason,"highestSingleWeek":highestSingleWeek,"highestPointsPerWeek":highestPointsPerWeek,"numWeeklyPayouts":numWeeklyPayouts}
         return await createLeaguePage(request, user_id, result, values)
-    response = RedirectResponse("leagueHome", status_code=status.HTTP_303_SEE_OTHER)
-    response.set_cookie(key="league_id",value = result)
+    response = RedirectResponse("leagueHome/"+ str(result), status_code=status.HTTP_303_SEE_OTHER)
+    #response.set_cookie(key="league_id",value = result)
     return response
 
 #league home page
 #id of the league attempting to be accessed is passed
 @app.get("/leagueHome/{league}")
-async def leaguePage(request:Request,user_id: Annotated[str | None, Cookie()] = None,league_id: Annotated[str | None, Cookie()] = None, league = 0):
-    return templates.TemplateResponse("leagueHome.html", context={"user_id":user_id, "league_id":league_id,"league":league, "request":request})
+async def leaguePage(league:int, request:Request,user_id: Annotated[str | None, Cookie()] = None):
+    if check_in_league(user_id, league):
+        return templates.TemplateResponse("leagueHome.html", context={"user_id":user_id, "league":league, "request":request})
+    else:
+        return "Not in league"
 
 #returns a league information based on league id passed
 @app.post("/leagueInfo/{league}")
-async def leaguePage(resquest:Request, user_id:Annotated[str | None, Cookie()] = None, league_id:Annotated[str | None, Cookie()] = None, league = 0):
+async def leaguePage(league:int ,resquest:Request, user_id:Annotated[str | None, Cookie()] = None):
     result = get_league_info(league)
     return JSONResponse(content = result)
 
-#get league information
+#get all user leagues information
 @app.post("/userLeagues")
-async def userLeagues(request:Request, user_id:Annotated[str | None, Cookie()] = None, league_id:Annotated[str | None, Cookie()] = None):
+async def userLeagues(request:Request, user_id:Annotated[str | None, Cookie()] = None):
     result = get_joined_leagues(user_id)
     return JSONResponse(content = result)

@@ -176,10 +176,8 @@ def league_size_requierments(size):
 #requierments for team prices
 #ensure no negative or non-integer
 def league_price_requierments(*prices):
-    print("IN LEAGUE PRICE")
     count = 0
     for price in prices:
-        print(count, " " , price)
         if price < 0:
             return "Prices cannot be less than 0."
         if type(price) != int:
@@ -231,3 +229,15 @@ def get_joined_leagues(user_id):
     if result == []:
         return None
     return result
+
+#check if a user is in a league
+#returns True if user is in the league
+#False is user is not in the league
+def check_in_league(user_id, league_id):
+    query = f"""SELECT league_id
+    FROM league_players
+    WHERE "league_id" = '{league_id}' AND "user_id" = '{user_id}';"""
+    result = qr.fetch_one(query)
+    if result is None:
+        return False
+    return True

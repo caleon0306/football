@@ -1,4 +1,4 @@
 import funcs
 
 if __name__ == '__main__':
-    print(funcs.get_joined_leagues(2))
+    print(funcs.check_in_league(2,15))
