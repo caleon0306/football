@@ -31,7 +31,7 @@
     }
     else {
       for (let i = 0; i < response.length; i++){
-      document.getElementById("leagues").innerHTML += `<a href = \"leagueHome\">${response[i][1]}</a>` + "<br/>"
+      document.getElementById("leagues").innerHTML += `<a href = \"leagueHome/${response[i][0]}\">${response[i][1]}</a>` + "<br/>"
     }
     }
   }

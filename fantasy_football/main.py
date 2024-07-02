@@ -66,14 +66,15 @@ async def createLeagueAttempt(request:Request, user_id: Annotated[str | None, Co
     return response
 
 #league home page
-@app.get("/leagueHome")
-async def leaguePage(request:Request,user_id: Annotated[str | None, Cookie()] = None,league_id: Annotated[str | None, Cookie()] = None):
-    return templates.TemplateResponse("leagueHome.html", context={"user_id":user_id, "league_id":league_id, "request":request})
+#id of the league attempting to be accessed is passed
+@app.get("/leagueHome/{league}")
+async def leaguePage(request:Request,user_id: Annotated[str | None, Cookie()] = None,league_id: Annotated[str | None, Cookie()] = None, league = 0):
+    return templates.TemplateResponse("leagueHome.html", context={"user_id":user_id, "league_id":league_id,"league":league, "request":request})
 
-#returns a league information
-@app.post("/leagueInfo")
-async def leaguePage(resquest:Request, user_id:Annotated[str | None, Cookie()] = None, league_id:Annotated[str | None, Cookie()] = None):
-    result = get_league_info(league_id)
+#returns a league information based on league id passed
+@app.post("/leagueInfo/{league}")
+async def leaguePage(resquest:Request, user_id:Annotated[str | None, Cookie()] = None, league_id:Annotated[str | None, Cookie()] = None, league = 0):
+    result = get_league_info(league)
     return JSONResponse(content = result)
 
 #get league information

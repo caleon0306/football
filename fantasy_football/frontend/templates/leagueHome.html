@@ -2,6 +2,8 @@
 <html>
 <body>
 
+<a href="../dashboard">Dashboard</a>
+
 <h1>
     League Home Page
 </h1>
@@ -13,7 +15,7 @@
     await getLeagueId();
   })();
   async function getLeagueId() {
-    let response = await fetch("/leagueInfo", {
+    let response = await fetch(`/leagueInfo/{{league}}`, {
         method:"POST",
         credentials:"include",
         mode:"cors",
