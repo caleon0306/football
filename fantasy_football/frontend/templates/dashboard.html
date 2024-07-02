@@ -8,11 +8,14 @@
 </h1>
 
 <p id="test">No result</p>
+<p>Leagues:</p>
+<p id = "leagues"></p>
 
 <script>
     //on page load
   (async () => {
     await getUsername();
+    await getLeagues();
   })();
 
   async function getUsername(){
@@ -24,6 +27,17 @@
   })
   response = await response.json()
   document.getElementById("test").innerHTML = response
+  }
+
+  async function getLeagues(){
+    let response = await fetch("/userLeagues", {
+      method:"POST",
+    credentials:"include",
+    mode:"cors",
+    headers:{"Content-Type": "application/json"}
+    })
+    response = await response.json()
+    document.getElementById("leagues").innerHTML += response
   }
 </script>
 

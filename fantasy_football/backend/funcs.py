@@ -215,3 +215,19 @@ def get_league_info(league_id):
     WHERE "league_id" = '{league_id}';"""
     result = qr.fetch_one(query)
     return result
+
+#get all leaagues a user is in
+#returns None if no leagues are joined
+#returns a list of tuples containing
+#(league_id, league_name)
+def get_joined_leagues(user_id):
+    query = f"""SELECT league_id, league_name
+    FROM league_info
+    WHERE league_id IN
+        (SELECT league_id
+        FROM league_players
+        WHERE "user_id" = '{user_id}');"""
+    result = qr.fetch_all(query)
+    if result == []:
+        return None
+    return result

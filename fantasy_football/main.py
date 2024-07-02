@@ -75,3 +75,8 @@ async def leaguePage(request:Request,user_id: Annotated[str | None, Cookie()] = 
 async def leaguePage(resquest:Request, user_id:Annotated[str | None, Cookie()] = None, league_id:Annotated[str | None, Cookie()] = None):
     result = get_league_info(league_id)
     return JSONResponse(content = result)
+
+@app.post("/userLeagues")
+async def userLeagues(request:Request, user_id:Annotated[str | None, Cookie()] = None, league_id:Annotated[str | None, Cookie()] = None):
+    result = get_joined_leagues(user_id)
+    return JSONResponse(content = result)
