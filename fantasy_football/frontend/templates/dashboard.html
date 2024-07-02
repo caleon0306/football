@@ -36,10 +36,11 @@
     mode:"cors",
     headers:{"Content-Type": "application/json"}
     })
-    console.log(response)
     response = await response.json()
-    console.log(response)
-    document.getElementById("leagues").innerHTML += response
+    for (let i = 0; i < response.length; i++){
+      document.getElementById("leagues").innerHTML += response[i]
+    }
+    
   }
 </script>
 
