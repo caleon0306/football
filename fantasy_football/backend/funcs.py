@@ -86,8 +86,9 @@ def join_league(user_id, league_id):
 def check_league(league_id):
     query = f"""SELECT league_id
     FROM league_info
-    WHERE 'league_id' = '{league_id}'"""
-    if qr.fetch_one(query) == None:
+    WHERE "league_id" = '{league_id}';"""
+    result = qr.fetch_one(query)
+    if result == None:
         return False
     return True
 

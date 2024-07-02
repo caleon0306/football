@@ -75,5 +75,6 @@ def get_rows_table(table = ""):
     FROM {table};"""
     return qr.fetch_all(query)
 
-#if __name__ == "__main__":
-    print(get_rows_table("user_info"))
+if __name__ == "__main__":
+    for row in get_rows_table("league_info"):
+        print(row)
