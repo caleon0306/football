@@ -76,11 +76,18 @@ def create_league(user_id, name="", size=0, price=0,firstPlace=0, secondPlace=0,
     WHERE "owner_id" = '{user_id}';"""
     result = qr.fetch_one(query)[0]
     update_pots(result)
+    join_league(user_id, result)
     return result
 
 #join a league given user an league id
 def join_league(user_id, league_id):
-    query = f""""""
+    #check league exists
+    if check_league(league_id) == False:
+        return False
+    query = f"""INSERT INTO league_players (user_id, league_id)
+    VALUES ('{user_id}', '{league_id}');"""
+    qr.run_commit(query)
+    return True
 
 #check to see if a league exists given id
 def check_league(league_id):
