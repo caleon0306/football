@@ -78,21 +78,18 @@ def create_league(user_id, name="", size=0, price=0,firstPlace=0, secondPlace=0,
     update_pots(result)
     return result
 
-#get the league name given the league id
-def get_league_name(league_id):
-    query = f"""SELECT league_name
-    FROM league_info
-    WHERE "league_id" = '{league_id}';"""
-    result = qr.fetch_one(query)[0]
-    return result
+#join a league given user an league id
+def join_league(user_id, league_id):
+    query = f""""""
 
-#get all league info given league id
-def get_league_info(league_id):
-    query = f"""SELECT *
+#check to see if a league exists given id
+def check_league(league_id):
+    query = f"""SELECT league_id
     FROM league_info
-    WHERE "league_id" = '{league_id}';"""
-    result = qr.fetch_one(query)
-    return result
+    WHERE 'league_id' = '{league_id}'"""
+    if qr.fetch_one(query) == None:
+        return False
+    return True
 
 #recalculate the money for the league
 def update_pots(league_id):
@@ -194,3 +191,19 @@ def get_username(user_id):
     FROM user_info
     WHERE "user_id" = '{user_id}';"""
     return qr.fetch_one(query)[0]
+
+#get the league name given the league id
+def get_league_name(league_id):
+    query = f"""SELECT league_name
+    FROM league_info
+    WHERE "league_id" = '{league_id}';"""
+    result = qr.fetch_one(query)[0]
+    return result
+
+#get all league info given league id
+def get_league_info(league_id):
+    query = f"""SELECT *
+    FROM league_info
+    WHERE "league_id" = '{league_id}';"""
+    result = qr.fetch_one(query)
+    return result
