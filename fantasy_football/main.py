@@ -46,12 +46,12 @@ async def signUpAttempt(request:Request, username: Annotated[str, Form()] = "", 
 #main user homepage
 @app.get("/dashboard")
 async def dashboard(request:Request, user_id: Annotated[str | None, Cookie()] = None):
-    return templates.TemplateResponse(name="dashboard.html", context={"username":user_id, "request":request})
+    return templates.TemplateResponse(name="dashboard.html", context={"user_id":user_id, "request":request})
 
 #page to create a new league
 @app.get("/createLeague")
 async def createLeaguePage(request:Request, user_id: Annotated[str | None, Cookie()] = None, createLeagueError = "", values = {}):
-    return templates.TemplateResponse("createLeague.html", context={"username":user_id, "request":request, "createLeagueError":createLeagueError, "values":values})
+    return templates.TemplateResponse("createLeague.html", context={"user_id":user_id, "request":request, "createLeagueError":createLeagueError, "values":values})
 
 #attempt to create a new league
 @app.post("/createLeague")
@@ -65,14 +65,19 @@ async def createLeagueAttempt(request:Request, user_id: Annotated[str | None, Co
     #response.set_cookie(key="league_id",value = result)
     return response
 
+@app.get("/joinLeague")
+async def joinLeague(request:Request, user_id: Annotated[str | None, Cookie()] = None):
+    return templates.TemplateResponse(name="joinLeague.html", context = {"user_id": user_id, "request":request})
+
 #league home page
 #id of the league attempting to be accessed is passed
+#check if the cookie of the user is in the league
 @app.get("/leagueHome/{league}")
 async def leaguePage(league:int, request:Request,user_id: Annotated[str | None, Cookie()] = None):
     if check_in_league(user_id, league):
         return templates.TemplateResponse("leagueHome.html", context={"user_id":user_id, "league":league, "request":request})
     else:
-        return "Not in league"
+        return "Unable to access league"
 
 #returns a league information based on league id passed
 @app.post("/leagueInfo/{league}")

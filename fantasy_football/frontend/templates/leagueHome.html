@@ -7,14 +7,15 @@
 <h1>
     League Home Page
 </h1>
-<p id="league_info">No league info</p>
+<p id="league_name">League Name: </p>
+<p id="leauge_size">Size: </p>
 
 <script>
       //on page load
   (async () => {
-    await getLeagueId();
+    await getLeagueInfo();
   })();
-  async function getLeagueId() {
+  async function getLeagueInfo() {
     let response = await fetch(`/leagueInfo/{{league}}`, {
         method:"POST",
         credentials:"include",
@@ -22,7 +23,8 @@
         headers:{"Content-Type": "application/json"}
     })
     response = await response.json()
-    document.getElementById("league_info").innerHTML = response
+    document.getElementById("league_name").innerHTML += response[2]
+    document.getElementById("leauge_size").innerHTML += response[3]
   }
 </script>
 </body>
