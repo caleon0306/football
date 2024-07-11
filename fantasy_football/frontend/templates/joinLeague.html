@@ -2,7 +2,18 @@
 <html>
 <body>
 
-<p>Here</p>
-
+<h1>
+    Join a League!
+</h1>
+<form method="post">
+    <label for="league_name">League Name</label>
+    <input type="text" id="league_name" name="league_name" value="{{values['league_name']}}">
+    <br>
+    <label for="league_id">League Id</label>
+    <input type="int" id = "league_id" name="league_id" value="{{values['league_id']}}">
+    <br>
+    <button type="submit" id = "join_league_button">Join League</button>
+</form>
+<p style="color:red">{{errorMessage}}</p>
 </body>
 </html>

@@ -62,12 +62,23 @@ async def createLeagueAttempt(request:Request, user_id: Annotated[str | None, Co
                   "highestPointsSeason":highestPointsSeason,"highestSingleWeek":highestSingleWeek,"highestPointsPerWeek":highestPointsPerWeek,"numWeeklyPayouts":numWeeklyPayouts}
         return await createLeaguePage(request, user_id, result, values)
     response = RedirectResponse("leagueHome/"+ str(result), status_code=status.HTTP_303_SEE_OTHER)
-    #response.set_cookie(key="league_id",value = result)
     return response
 
+#page to enter information to join a league
 @app.get("/joinLeague")
-async def joinLeague(request:Request, user_id: Annotated[str | None, Cookie()] = None):
-    return templates.TemplateResponse(name="joinLeague.html", context = {"user_id": user_id, "request":request})
+async def joinLeague(request:Request, user_id: Annotated[str | None, Cookie()] = None, values={}, errorMessage=""):
+    return templates.TemplateResponse(name="joinLeague.html", context = {"user_id": user_id, "request":request, "values":values, "errorMessage":errorMessage})
+
+#attempt to join a leauge
+@app.post("/joinLeague")
+async def joinLeagueAttempt(request:Request,user_id: Annotated[str | None, Cookie()], league_name: Annotated[str, Form()] = "", league_id: Annotated[int, Form()] = 0):
+    result = join_league(user_id, league_id, league_name)
+    if result == True:
+        response = RedirectResponse("leagueHome/" + str(league_id), status_code=status.HTTP_303_SEE_OTHER)
+        return response
+    values = {"league_name": league_name, "league_id": league_id}
+    return await joinLeague(request,user_id,values, errorMessage = result)
+    
 
 #league home page
 #id of the league attempting to be accessed is passed

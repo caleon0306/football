@@ -79,21 +79,25 @@ def create_league(user_id, name="", size=0, price=0,firstPlace=0, secondPlace=0,
     join_league(user_id, result)
     return result
 
-#join a league given user an league id
-def join_league(user_id, league_id):
+#join a league given user an league id and name
+def join_league(user_id, league_id, leauge_name):
     #check league exists
-    if check_league(league_id) == False:
-        return False
+    if check_league_exists(league_id, leauge_name) == False:
+        return "League does not exist"
+    #make sure user in not in the league
+    if check_in_league(user_id, league_id):
+        return "You are already in this league"
+    #add player to the league
     query = f"""INSERT INTO league_players (user_id, league_id)
     VALUES ('{user_id}', '{league_id}');"""
     qr.run_commit(query)
     return True
 
-#check to see if a league exists given id
-def check_league(league_id):
+#check to see if a league exists given id and name
+def check_league_exists(league_id, league_name):
     query = f"""SELECT league_id
     FROM league_info
-    WHERE "league_id" = '{league_id}';"""
+    WHERE "league_id" = '{league_id}' AND "league_name" = '{league_name}';"""
     result = qr.fetch_one(query)
     if result == None:
         return False
