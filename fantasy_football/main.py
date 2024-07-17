@@ -111,6 +111,6 @@ async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = Non
 @app.post("/logout")
 async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = None):
     print("IN LOGOUT POST")
-    response = RedirectResponse("", status_code=status.HTTP_303_SEE_OTHER)
+    response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
     response.delete_cookie(key="user_id",)
     return response
