@@ -105,7 +105,7 @@ async def userLeagues(request:Request, user_id:Annotated[str | None, Cookie()] =
 #get logout page
 @app.get("/logout")
 async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = None):
-    return templates.TemplateResponse("logout.html")
+    return templates.TemplateResponse("logout.html", context={"request":request})
 
 #attempt to logout and clear cookies
 @app.post("/logout")
