@@ -3,9 +3,9 @@
 <body>
 
 <script>
-   (async () =>{
+   (async () => {
     await logout();
-   }) ();
+  })();
    async function logout(){
     console.log("Start func")
     let response = await fetch('/logout', {
