@@ -102,6 +102,7 @@ async def leaguePage(league:int ,request:Request, user_id:Annotated[str | None, 
         result.append(False)
     return JSONResponse(content = tuple(result))
 
+#ADD /{league} and league var to param and context
 @app.get("/leagueSettings")
 async def leagueSettingsPage(request:Request, user_id:Annotated[str | None, Cookie()] = None):
     return templates.TemplateResponse("leagueSettings.html", context={"user_id":user_id, "request":request})

@@ -3,7 +3,7 @@
 <body>
 
 <a href="../dashboard">Dashboard</a>
-<a id="leagueSettings" href="../leagueSettings"></a>
+<a id="leagueSettings" href=""></a>
 
 <h1>
     League Home Page
@@ -28,9 +28,13 @@
     document.getElementById("league_name").innerHTML += response[2]
     document.getElementById("leauge_size").innerHTML += response[3]
     document.getElementById("owner").innerHTML += response[1]
-    //Add link to league settings page
+    //Add link to league settings
+    //TO-DO
+    //CHANGE HREF TO POINT TO A SPECIFIC LEAGUE USING RESPONSE INFO
     if (response[response.length - 1]){
-      document.getElementById("leagueSettings").innerHTML += "League Settings"
+      leagueSettings = document.getElementById("leagueSettings")
+      leagueSettings.innerHTML += "League Settings"
+      leagueSettings.href = "../leagueSettings"
     }
   }
 </script>
