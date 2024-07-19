@@ -94,7 +94,12 @@ async def leaguePage(league:int, request:Request,user_id: Annotated[str | None, 
 @app.post("/leagueInfo/{league}")
 async def leaguePage(league:int ,resquest:Request, user_id:Annotated[str | None, Cookie()] = None):
     result = get_league_info(league)
-    return JSONResponse(content = result)
+    #check to see if user is owner of the league and add information to result
+    if result[1] == int(user_id):
+        result.append(True)
+    else:
+        result.append(False)
+    return JSONResponse(content = tuple(result))
 
 #get all user leagues information
 @app.post("/userLeagues")
@@ -106,15 +111,6 @@ async def userLeagues(request:Request, user_id:Annotated[str | None, Cookie()] =
 @app.get("/logout")
 async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = None):
     print("IN LOGOUT GET")
-    response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
-    response.delete_cookie(key="user_id")
-    return response
-
-#GET THE REDIRECT BACK TO THE HOMEPAGE
-#attempt to logout and clear cookies
-@app.post("/logout")
-async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = None):
-    print("IN LOGOUT POST")
     response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
     response.delete_cookie(key="user_id")
     return response

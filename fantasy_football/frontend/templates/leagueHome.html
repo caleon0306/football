@@ -9,6 +9,7 @@
 </h1>
 <p id="league_name">League Name: </p>
 <p id="leauge_size">Size: </p>
+<p id="owner">Owner:</p>
 
 <script>
       //on page load
@@ -25,6 +26,7 @@
     response = await response.json()
     document.getElementById("league_name").innerHTML += response[2]
     document.getElementById("leauge_size").innerHTML += response[3]
+    document.getElementById("owner").innerHTML += response[1]
   }
 </script>
 </body>
