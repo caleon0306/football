@@ -92,7 +92,7 @@ async def leaguePage(league:int, request:Request,user_id: Annotated[str | None, 
 
 #returns a league information based on league id passed
 @app.post("/leagueInfo/{league}")
-async def leaguePage(league:int ,resquest:Request, user_id:Annotated[str | None, Cookie()] = None):
+async def leaguePage(league:int ,request:Request, user_id:Annotated[str | None, Cookie()] = None):
     result = get_league_info(league)
     #check to see if user is owner of the league and add information to result
     result = list(result)
@@ -101,6 +101,10 @@ async def leaguePage(league:int ,resquest:Request, user_id:Annotated[str | None,
     else:
         result.append(False)
     return JSONResponse(content = tuple(result))
+
+@app.get("/leagueSettings")
+async def leagueSettingsPage(request:Request, user_id:Annotated[str | None, Cookie()] = None):
+    return templates.TemplateResponse("leagueSettings.html", context={"user_id":user_id, "request":request})
 
 #get all user leagues information
 @app.post("/userLeagues")
