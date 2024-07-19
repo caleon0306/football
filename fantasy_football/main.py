@@ -14,7 +14,7 @@ templates = Jinja2Templates(directory="frontend/templates")
 
 #root directory used for login page
 @app.get("/")
-async def loginPage(request:Request, loginError="", username = ""):
+async def loginPage(request:Request, user_id:Annotated[str | None, Cookie()] = None, loginError="", username = ""):
     return templates.TemplateResponse("login.html", context ={"request":request, "loginError":loginError, "username":username})
 
 #attempt to login
@@ -105,7 +105,10 @@ async def userLeagues(request:Request, user_id:Annotated[str | None, Cookie()] =
 #get logout page
 @app.get("/logout")
 async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = None):
-    return templates.TemplateResponse("logout.html", context={"request":request})
+    print("IN LOGOUT GET")
+    response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
+    response.delete_cookie(key="user_id")
+    return response
 
 #GET THE REDIRECT BACK TO THE HOMEPAGE
 #attempt to logout and clear cookies
@@ -113,5 +116,5 @@ async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = Non
 async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = None):
     print("IN LOGOUT POST")
     response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
-    response.delete_cookie(key="user_id",)
+    response.delete_cookie(key="user_id")
     return response
