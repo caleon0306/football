@@ -95,6 +95,7 @@ async def leaguePage(league:int, request:Request,user_id: Annotated[str | None, 
 async def leaguePage(league:int ,resquest:Request, user_id:Annotated[str | None, Cookie()] = None):
     result = get_league_info(league)
     #check to see if user is owner of the league and add information to result
+    result = list(result)
     if result[1] == int(user_id):
         result.append(True)
     else:
@@ -110,7 +111,6 @@ async def userLeagues(request:Request, user_id:Annotated[str | None, Cookie()] =
 #get logout page
 @app.get("/logout")
 async def logout(request:Request, user_id: Annotated[str | None, Cookie()] = None):
-    print("IN LOGOUT GET")
     response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
     response.delete_cookie(key="user_id")
     return response
